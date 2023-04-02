@@ -6,23 +6,27 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
+    public float transparentValue;
+    public List<GameObject> shipParts;
+
     private Transform _transform;
     private Camera cam;
     private SpriteRenderer shootPoint;
     private bool isMoving;
     private bool isFiring;
+    private bool invulnerable;
     [SerializeField] private float speed;
     [SerializeField] private Vector3 target;
     
     [Tooltip("Time between each shot")]
-    private float firerate;
+    private float fireRate;
     
     private void Start()
     {
-        shootPoint = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _transform = transform;
+        shootPoint = _transform.GetChild(0).GetComponent<SpriteRenderer>();
         cam = Camera.main;
-        firerate = .5f;
+        fireRate = .5f;
     }
 
     private void Update()
@@ -51,7 +55,7 @@ public class SpaceShip : MonoBehaviour
             }
         }
 
-        if (firerate > 0) firerate -= Time.deltaTime;
+        if (fireRate > 0) fireRate -= Time.deltaTime;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -63,16 +67,15 @@ public class SpaceShip : MonoBehaviour
             isFiring = false;
         }
         
-        if (isFiring && !isMoving && firerate <= 0)
+        if (isFiring && !isMoving && fireRate <= 0)
         {
             Shoot(direction);
-            firerate = .2f;
+            fireRate = .2f;
         }
     }
 
     private void Shoot(Vector3 direction)
     {
-        
         var bullet = ObjectPooler.Instance.Spawn("Bullet");
         bullet.GetComponent<Bullet>().dir = direction.normalized;
         bullet.transform.position = shootPoint.transform.position;

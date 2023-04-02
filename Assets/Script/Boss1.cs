@@ -76,32 +76,33 @@ public class Boss1 : Boss
 	    }
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage()
     {
-	    health -= damage;
+
     }
 
 
     public override void Fire()
 	{
-		var forwardBullet = BulletSpawn(shotForwardPos);
-		var rightBullet = BulletSpawn(shotRightPos);
-		var leftBullet = BulletSpawn(shotLeftPos);
+		BulletSpawn(shotForwardPos);
+		BulletSpawn(shotRightPos);
+		BulletSpawn(shotLeftPos);
 
 		if (health <= maxHealth * 2.75 / 5.0)
 		{
-			var rightBulletOffset = BulletSpawn(shotRightPosOffset);
-			var leftBulletOffset = BulletSpawn(shotLeftPosOffset);
+			BulletSpawn(shotRightPosOffset);
+			BulletSpawn(shotLeftPosOffset);
 		}
 	}
 
 	private GameObject BulletSpawn(Transform pivot)
 	{
 		var dir = pivot.position - gun.position;
-		var bullet = ObjectPooler.Instance.Spawn("Bullet");
+		var bullet = ObjectPooler.Instance.Spawn("EnemyBullet");
 		bullet.transform.position = pivot.position;
-		bullet.GetComponent<Bullet>().Init(dir.normalized, 160f);
+		bullet.GetComponent<Bullet>().Init(dir.normalized, 20f);
 		return bullet;
 	}
     
+	
 }

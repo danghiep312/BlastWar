@@ -32,10 +32,16 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - Sirenix.OdinInspector.CompatibilityLayer
     - Assembly-CSharp
+    - UniTask
+    - UniTask.Linq
+    - UniTask.TextMeshPro
+    - UniTask.DOTween
+    - UniTask.Addressables
     - PsdPlugin
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - Sirenix.OdinValidator
     - Sirenix.OdinInspector.Modules.UnityMathematics
+    - UniTask.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
