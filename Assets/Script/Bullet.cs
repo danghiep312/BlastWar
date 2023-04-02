@@ -6,14 +6,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private SpriteRenderer sr;
-    [SerializeField] private float speed;
-    private Vector3 dir;
+    public float speed;
+    public Vector3 dir;
     
-    public Vector3 Dir
-    {
-        get => dir;
-        set => dir = value;
-    }
 
     private void Start()
     {
@@ -28,5 +23,10 @@ public class Bullet : MonoBehaviour
             ObjectPooler.Instance.ReleaseObject(gameObject);
         }
     }
-    
+
+    public void Init(Vector3 dir, float speed)
+    {
+        this.dir = dir;
+        this.speed = speed;
+    }
 }

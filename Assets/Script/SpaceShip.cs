@@ -74,7 +74,7 @@ public class SpaceShip : MonoBehaviour
     {
         
         var bullet = ObjectPooler.Instance.Spawn("Bullet");
-        bullet.GetComponent<Bullet>().Dir = direction.normalized;
+        bullet.GetComponent<Bullet>().dir = direction.normalized;
         bullet.transform.position = shootPoint.transform.position;
         shootPoint.DOFade(1f, 0.1f).SetEase(Ease.Linear).OnComplete(() =>
         {
