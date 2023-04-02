@@ -1,10 +1,17 @@
+using System;
 using UnityEngine;
 
 
-public class Boss : MonoBehaviour
+public abstract class Boss : MonoBehaviour
 {
     protected float health;
     protected float maxHealth;
-    protected int damage;
-    protected int speed;
+    protected float damage;
+    protected float moveSpeed;
+
+    public abstract void Fire();
+    
+    public abstract void Move();
+    
+    public abstract void TakeDamage(float damage);
 }
