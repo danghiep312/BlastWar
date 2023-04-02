@@ -88,4 +88,9 @@ public class SpaceShip : MonoBehaviour
         mousePosition.z = 10;
         return cam.ScreenToWorldPoint(mousePosition);
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        
+    }
 }
