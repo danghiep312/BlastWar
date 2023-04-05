@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
     public float transparentValue;
-    public List<GameObject> shipParts;
+    public List<SpriteRenderer> shipParts;
+    public int health;
 
     private Transform _transform;
     private Camera cam;
@@ -27,6 +29,7 @@ public class SpaceShip : MonoBehaviour
         shootPoint = _transform.GetChild(0).GetComponent<SpriteRenderer>();
         cam = Camera.main;
         fireRate = .5f;
+        health = 3;
     }
 
     private void Update()
@@ -67,7 +70,7 @@ public class SpaceShip : MonoBehaviour
             isFiring = false;
         }
         
-        if (isFiring && !isMoving && fireRate <= 0)
+        if (isFiring && !isMoving && fireRate <= 0 && !invulnerable)
         {
             Shoot(direction);
             fireRate = .2f;
@@ -94,6 +97,30 @@ public class SpaceShip : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        
+        if (invulnerable) return;
+        if (col.gameObject.CompareTag("EnemyBullet"))
+        {
+            health--;
+            TakeDamage();    
+        }
+    }
+
+    private async void TakeDamage()
+    {
+        SetTransparent(transparentValue);
+        SetTransparent(transparentValue);
+        invulnerable = true;
+        this.PostEvent(EventID.PTakeDamage);
+        await UniTask.Delay(TimeSpan.FromSeconds(.5f));
+        SetTransparent(1f);
+        invulnerable = false;
+    }
+
+    private void SetTransparent(float value)
+    {
+        foreach (var sr in shipParts)
+        {
+            sr.DOFade(value, 0);
+        }
     }
 }

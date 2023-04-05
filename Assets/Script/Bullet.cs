@@ -29,6 +29,5 @@ public class Bullet : MonoBehaviour
         this.dir = dir;
         this.speed = speed;
     }
-    
-    
+
 }

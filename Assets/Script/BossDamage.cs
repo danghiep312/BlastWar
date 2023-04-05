@@ -8,31 +8,27 @@ using UnityEngine;
 public class BossDamage : MonoBehaviour
 {
     public List<SpriteRenderer> objectsToHighlight;
-
-    [HideInInspector]
-    public float health;
-
-    public float maxHealth;
+    
     public float transparentValue;
     [HideInInspector]
     public bool separateBoss;
     private GameObject player;
 
-    private bool dead;
+    
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(1f);
+            TakeDamage();
             ObjectPooler.Instance.ReleaseObject(col.gameObject);
         }
     }
 
-    public async void TakeDamage(float damage)
+    private async void TakeDamage()
     {
-        health -= damage;
         SetTransparent(transparentValue);
+        this.PostEvent(EventID.BTakeDamage);
         await UniTask.Delay(TimeSpan.FromSeconds(.1f));
         SetTransparent(1f);
     }
